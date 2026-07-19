@@ -2,6 +2,7 @@
 
 # compiled output
 /dist
+/.astro
 /.cache
 /build
 /tmp

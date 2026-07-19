@@ -1,0 +1,55 @@
+<button
+  class="group grid size-10 place-items-center border border-current/25 transition-colors hover:bg-acid hover:text-terminal"
+  type="button"
+  aria-label="Switch color theme"
+  data-theme-toggle
+>
+  <svg
+    class="size-4 group-data-[theme=dark]:hidden"
+    aria-hidden="true"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+  >
+    <circle cx="12" cy="12" r="4"></circle>
+    <path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"></path>
+  </svg>
+  <svg
+    class="hidden size-4 group-data-[theme=dark]:block"
+    aria-hidden="true"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+  >
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"></path>
+  </svg>
+</button>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+
+  function activeTheme(): 'light' | 'dark' {
+    return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+  }
+
+  function syncToggle(): void {
+    if (!toggle) return;
+    const theme = activeTheme();
+    toggle.dataset.theme = theme;
+    toggle.setAttribute(
+      'aria-label',
+      theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme',
+    );
+  }
+
+  toggle?.addEventListener('click', () => {
+    const nextTheme = activeTheme() === 'dark' ? 'light' : 'dark';
+    document.documentElement.classList.toggle('dark', nextTheme === 'dark');
+    localStorage.setItem('theme', nextTheme);
+    syncToggle();
+  });
+
+  syncToggle();
+</script>

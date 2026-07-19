@@ -1,0 +1,62 @@
+---
+import { getCollection } from 'astro:content';
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatDate, publishedPosts } from '../../lib/content';
+
+const posts = publishedPosts(await getCollection('blog'));
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout
+  title="Field Notes — Gerlis Álvarez Cardona"
+  description="Notes on software, craft, experiments, and what changed along the way."
+>
+  <div class="mx-auto max-w-[90rem] px-5 py-16 sm:px-8 lg:px-12 lg:py-28">
+    <header class="grid gap-8 border-b border-current/20 pb-14 lg:grid-cols-[1fr_0.7fr] lg:items-end">
+      <div>
+        <p class="eyebrow mb-5 text-coral">Field notes / dispatches</p>
+        <h1 class="text-6xl font-bold tracking-[-0.06em] sm:text-8xl">Writing.</h1>
+      </div>
+      <p class="max-w-xl text-lg leading-8 text-muted lg:justify-self-end">
+        Work in public, half-formed observations, and technical details worth
+        keeping. No newsletter machinery—just files in a repository.
+      </p>
+    </header>
+
+    <ol>
+      {
+        posts.map((post, index) => (
+          <li class="border-b border-current/20">
+            <a
+              class="group grid gap-7 py-10 sm:grid-cols-[5rem_1fr_auto] sm:items-start lg:py-14"
+              href={`${base}blog/${post.id}/`}
+            >
+              <span class="font-mono text-xs text-muted">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <div>
+                <h2 class="text-3xl font-bold tracking-[-0.035em] transition-colors group-hover:text-coral sm:text-4xl">
+                  {post.data.title}
+                </h2>
+                <p class="mt-4 max-w-2xl leading-7 text-muted">
+                  {post.data.description}
+                </p>
+                <ul class="mt-5 flex flex-wrap gap-2" aria-label="Post tags">
+                  {post.data.tags.map((tag) => (
+                    <li class="font-mono text-[10px] uppercase tracking-wider">
+                      #{tag}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <time class="font-mono text-xs text-muted" datetime={post.data.pubDate.toISOString()}>
+                {formatDate(post.data.pubDate, 'short')}
+              </time>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</BaseLayout>

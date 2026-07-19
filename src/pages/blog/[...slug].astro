@@ -1,0 +1,43 @@
+---
+import { getCollection, render } from 'astro:content';
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatDate, publishedPosts } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const posts = publishedPosts(await getCollection('blog'));
+
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout title={`${post.data.title} — Gerlis Álvarez Cardona`} description={post.data.description}>
+  <article class="mx-auto max-w-3xl px-5 py-16 sm:px-8 lg:py-28">
+    <a
+      class="eyebrow inline-block border-b border-current/25 pb-1 transition-colors hover:text-coral"
+      href={`${base}blog/`}
+    >
+      ← All notes
+    </a>
+    <header class="mt-12 border-b border-current/20 pb-10">
+      <p class="eyebrow mb-5 text-coral">Entry / {formatDate(post.data.pubDate, 'long')}</p>
+      <h1 class="text-5xl font-bold leading-[0.95] tracking-[-0.055em] sm:text-7xl">
+        {post.data.title}
+      </h1>
+      <p class="mt-7 text-xl leading-8 text-muted">{post.data.description}</p>
+      <ul class="mt-7 flex flex-wrap gap-3 font-mono text-xs" aria-label="Post tags">
+        {post.data.tags.map((tag: string) => <li>#{tag}</li>)}
+      </ul>
+    </header>
+    <div class="prose prose-neutral mt-12 max-w-none prose-headings:font-sans prose-headings:tracking-tight prose-a:text-coral prose-code:font-mono dark:prose-invert">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>

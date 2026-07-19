@@ -1,0 +1,91 @@
+@import "@fontsource-variable/space-grotesk";
+@import "@fontsource-variable/jetbrains-mono";
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Space Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+  --color-ink: #161a1d;
+  --color-paper: #f3f0e8;
+  --color-terminal: #0d1110;
+  --color-acid: #c7f464;
+  --color-coral: #ff6b5f;
+  --color-muted: #68716d;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-width: 320px;
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    text-rendering: optimizeLegibility;
+  }
+
+  .dark body {
+    background: var(--color-terminal);
+    color: #f4f5ef;
+  }
+
+  ::selection {
+    background: var(--color-acid);
+    color: var(--color-terminal);
+  }
+
+  a,
+  button {
+    outline-offset: 4px;
+  }
+}
+
+@layer components {
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .section-rule {
+    border-top: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+  }
+}
+
+:root:not(.dark) .astro-code,
+:root:not(.dark) .astro-code span {
+  background-color: var(--shiki-light-bg) !important;
+  color: var(--shiki-light) !important;
+}
+
+.dark .astro-code,
+.dark .astro-code span {
+  background-color: var(--shiki-dark-bg) !important;
+  color: var(--shiki-dark) !important;
+}
+
+.astro-code {
+  border: 1px solid color-mix(in srgb, currentColor 16%, transparent);
+  border-radius: 0;
+  padding: 1.25rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,64 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+
+import ProjectsReveal from '../components/react/ProjectsReveal';
+import SkillsReveal from '../components/react/SkillsReveal';
+import TerminalHero from '../components/react/TerminalHero';
+import { profile } from '../data/profile';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { featuredProjects } from '../lib/content';
+import portrait from '../assets/images/ASD_0017.jpeg';
+
+const projectEntries = featuredProjects(await getCollection('projects'));
+const projects = projectEntries.map(({ data }) => ({
+  title: data.title,
+  description: data.description,
+  url: data.url,
+  repo: data.repo,
+  tags: data.tags,
+  featured: data.featured,
+}));
+---
+
+<BaseLayout
+  title={`${profile.intro.name} — Senior Frontend Developer`}
+  description={profile.intro.description}
+>
+  <div class="mx-auto max-w-360 px-5 sm:px-8 lg:px-12">
+    <section class="grid gap-16 py-12 lg:grid-cols-[minmax(0,1.55fr)_minmax(17rem,0.6fr)] lg:py-20">
+      <div>
+        <p class="eyebrow mb-5 text-coral">01 / Hello, internet</p>
+        <TerminalHero intro={profile.intro} client:load />
+      </div>
+
+      <aside class="relative lg:pt-24">
+        <div class="lg:sticky lg:top-8">
+          <div class="relative ml-auto max-w-sm">
+            <div class="absolute -left-4 -top-4 size-20 border-l-2 border-t-2 border-coral" aria-hidden="true"></div>
+            <Image
+              class="aspect-2/3 w-full object-cover grayscale-20"
+              src={portrait}
+              alt="Portrait of the site author looking over their shoulder"
+              widths={[320, 480, 640]}
+              sizes="(min-width: 1024px) 24vw, 90vw"
+              loading="eager"
+            />
+            <p class="mt-4 border-l-2 border-acid pl-4 font-mono text-xs leading-6 text-muted">
+              Senior Frontend Developer<br />
+              Barranquilla, Colombia.
+            </p>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <div class="section-rule">
+      <SkillsReveal skills={profile.skills} social={profile.social} client:visible />
+    </div>
+
+    <div class="section-rule">
+      <ProjectsReveal projects={projects} client:visible />
+    </div>
+  </div>
+</BaseLayout>
