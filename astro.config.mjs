@@ -5,7 +5,7 @@ import { defineConfig } from 'astro/config';
 
 export default defineConfig({
   site: 'https://gerlis18.github.io',
-  base: '/me/',
+  base: '/aboutme/',
   output: 'static',
   integrations: [react(), mdx()],
   vite: {
