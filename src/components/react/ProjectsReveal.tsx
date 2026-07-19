@@ -1,5 +1,5 @@
-import { ArrowUpRight, Code } from 'lucide-react';
-import { motion, useReducedMotion } from 'motion/react';
+import { ArrowUpRight, Code } from "lucide-react";
+import { motion, useReducedMotion } from "motion/react";
 
 export interface Project {
   title: string;
@@ -43,7 +43,7 @@ export default function ProjectsReveal({ projects }: Props) {
             transition={{ delay: reduceMotion ? 0 : index * 0.09 }}
           >
             <span className="font-mono text-xs text-muted">
-              {String(index + 1).padStart(2, '0')}
+              {String(index + 1).padStart(2, "0")}
             </span>
             <div>
               <div className="mb-4 flex flex-wrap items-center gap-3">
@@ -52,14 +52,22 @@ export default function ProjectsReveal({ projects }: Props) {
                 </h3>
                 {project.featured ? (
                   <span className="bg-acid px-2 py-1 font-mono text-[10px] uppercase tracking-wider text-terminal">
-                    Recent role
+                    Current role
                   </span>
                 ) : null}
               </div>
-              <p className="max-w-2xl leading-7 text-muted">{project.description}</p>
-              <ul className="mt-5 flex flex-wrap gap-2" aria-label="Role technologies">
+              <p className="max-w-2xl leading-7 text-muted">
+                {project.description}
+              </p>
+              <ul
+                className="mt-5 flex flex-wrap gap-2"
+                aria-label="Role technologies"
+              >
                 {project.tags.map((tag) => (
-                  <li className="border border-current/20 px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider" key={tag}>
+                  <li
+                    className="border border-current/20 px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider"
+                    key={tag}
+                  >
                     {tag}
                   </li>
                 ))}

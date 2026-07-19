@@ -4,6 +4,7 @@ description: "Built web and mobile experiences across client projects, automated
 url: "https://www.linkedin.com/company/intergrupo/"
 tags: ["Angular", "NGRX", "Azure DevOps", "Web", "Mobile"]
 featured: false
+order: 3
 ---
 
 Cross-functional delivery across several digital products, combining hands-on

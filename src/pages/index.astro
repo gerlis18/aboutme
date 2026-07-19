@@ -7,10 +7,10 @@ import SkillsReveal from '../components/react/SkillsReveal';
 import TerminalHero from '../components/react/TerminalHero';
 import { profile } from '../data/profile';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { featuredProjects } from '../lib/content';
+import { orderedProjects } from '../lib/content';
 import portrait from '../assets/images/ASD_0017.jpeg';
 
-const projectEntries = featuredProjects(await getCollection('projects'));
+const projectEntries = orderedProjects(await getCollection('projects'));
 const projects = projectEntries.map(({ data }) => ({
   title: data.title,
   description: data.description,

@@ -4,6 +4,7 @@ description: "Building and shipping production applications with Astro, React, a
 url: "https://www.linkedin.com/company/globant/"
 tags: ["TypeScript", "Astro", "React", "Performance", "Accessibility"]
 featured: true
+order: 1
 ---
 
 Current role focused on hybrid static and dynamic web experiences, reusable

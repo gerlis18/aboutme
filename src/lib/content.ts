@@ -7,7 +7,7 @@ type BlogEntry = {
 
 type ProjectEntry = {
   data: {
-    featured: boolean;
+    order: number;
   };
 };
 
@@ -19,10 +19,8 @@ export function publishedPosts<T extends BlogEntry>(posts: T[]): T[] {
     );
 }
 
-export function featuredProjects<T extends ProjectEntry>(projects: T[]): T[] {
-  return projects.toSorted(
-    (left, right) => Number(right.data.featured) - Number(left.data.featured),
-  );
+export function orderedProjects<T extends ProjectEntry>(projects: T[]): T[] {
+  return projects.toSorted((left, right) => left.data.order - right.data.order);
 }
 
 export function formatDate(date: Date, month: 'short' | 'long'): string {

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { featuredProjects, formatDate, publishedPosts } from './content';
+import { formatDate, orderedProjects, publishedPosts } from './content';
 
 describe('publishedPosts', () => {
   it('excludes drafts and sorts newest posts first', () => {
@@ -14,15 +14,15 @@ describe('publishedPosts', () => {
   });
 });
 
-describe('featuredProjects', () => {
-  it('returns featured projects before the remaining projects', () => {
+describe('orderedProjects', () => {
+  it('returns projects by ascending content order', () => {
     const projects = [
-      { data: { featured: false } },
-      { data: { featured: true } },
-      { data: { featured: true } },
+      { data: { order: 3 } },
+      { data: { order: 1 } },
+      { data: { order: 2 } },
     ];
 
-    expect(featuredProjects(projects)).toEqual([
+    expect(orderedProjects(projects)).toEqual([
       projects[1],
       projects[2],
       projects[0],
